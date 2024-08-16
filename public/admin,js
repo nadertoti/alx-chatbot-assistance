@@ -1,0 +1,86 @@
+/*
+document.addEventListener('DOMContentLoaded', () => {
+    const saveBtn = document.getElementById('save-btn');
+    const questionInput = document.getElementById('question');
+    const responseInput = document.getElementById('response');
+    const entryIdInput = document.getElementById('entry-id');
+    const entriesContainer = document.getElementById('entries-container');
+
+    const loadEntries = () => {
+        fetch('/api/knowledgeBase')
+            .then(response => response.json())
+            .then(data => {
+                entriesContainer.innerHTML = '';
+                data.forEach(entry => {
+                    const entryDiv = document.createElement('div');
+                    entryDiv.className = 'p-2 border-b border-gray-300 flex justify-between items-center';
+                    entryDiv.innerHTML = `
+                        <div>
+                            <p class="font-bold">${entry.question}</p>
+                            <p>${entry.response}</p>
+                        </div>
+                        <div>
+                            <button class="bg-yellow-500 text-white py-1 px-2 rounded-lg edit-btn" data-id="${entry._id}">Edit</button>
+                            <button class="bg-red-500 text-white py-1 px-2 rounded-lg delete-btn" data-id="${entry._id}">Delete</button>
+                        </div>
+                    `;
+                    entriesContainer.appendChild(entryDiv);
+                });
+
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        fetch(`/api/knowledgeBase/${id}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                entryIdInput.value = data._id;
+                                questionInput.value = data.question;
+                                responseInput.value = data.response;
+                            });
+                    });
+                });
+
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        fetch(`/api/knowledgeBase/${id}`, {
+                            method: 'DELETE'
+                        })
+                            .then(() => loadEntries())
+                            .catch(error => console.error('Error deleting entry:', error));
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading entries:', error));
+    };
+
+    saveBtn.addEventListener('click', () => {
+        const id = entryIdInput.value;
+        const question = questionInput.value;
+        const response = responseInput.value;
+
+        if (!question || !response) {
+            alert('Both question and response are required.');
+            return;
+        }
+
+        const url = id ? `/api/knowledgeBase/${id}` : '/api/knowledgeBase';
+        const method = id ? 'PUT' : 'POST';
+
+        fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question, response })
+        })
+            .then(() => {
+                questionInput.value = '';
+                responseInput.value = '';
+                entryIdInput.value = '';
+                loadEntries();
+            })
+            .catch(error => console.error('Error saving entry:', error));
+    });
+
+    loadEntries();
+});
+*/
