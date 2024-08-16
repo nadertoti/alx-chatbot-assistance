@@ -1,6 +1,4 @@
-Here's a draft README file based on the provided information:
-
-ALX Assistance Chatbot
+**ALX Assistance Chatbot**
 Project Overview
 The ALX Assistance Chatbot is designed to assist software engineering students enrolled in the ALX Africa program. This chatbot enhances the student experience by providing quick and accurate responses to frequently asked questions. It leverages a combination of a knowledge base and the Gemini API for generating responses when the knowledge base does not contain the necessary information.
 
