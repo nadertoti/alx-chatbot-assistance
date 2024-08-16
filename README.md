@@ -30,7 +30,7 @@ The **ALX Assistance Chatbot** is designed to assist software engineering studen
 - **API Integration:** Gemini API (Google Generative AI).
 ## Project Architecture
 
-![project architecture](alx-chatbot-assistance/image.png)
+![project architecture](image.png)
 
 
 **1. Public/**
