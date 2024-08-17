@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +20,10 @@ mongoose.connect('mongodb://localhost:27017/chatbot', { useNewUrlParser: true, u
 
 // Routes
 const chatbotRoute = require('./routes/chatbot');
+const knowledgeBaseRoutes = require('./routes/knowledgeBase');  // Import the new knowledge base routes
+
 app.use('/api/chatbot', chatbotRoute);
+app.use('/api/knowledgeBase', knowledgeBaseRoutes);  // Add the new route for knowledge base management
 
 // Public folder for frontend
 app.use(express.static('public'));
