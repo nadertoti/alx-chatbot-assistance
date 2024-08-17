@@ -1,5 +1,6 @@
 const KnowledgeBase = require('../models/KnowledgeBase');
 const model = require('../gemini'); // Import the Gemini model
+const { generateShortResponse } = require('../gemini'); // Import the updated generateShortResponse function
 
 // Controller to handle knowledge base queries through user question
 // Firist approach : without handle question uing Gemini API
@@ -28,24 +29,33 @@ exports.handleQuery = async (req, res) => {
         const { message } = req.body;
 
         // Search the knowledge base for an answer
-        const answer = await KnowledgeBase.findOne({ question: { $regex: message, $options: 'i' } });
+        const answer = await KnowledgeBase.findOne({
+            question: { $regex: message, $options: 'i' } // Case-insensitive search
+        });
 
         if (answer) {
+            // If a matching answer is found in the knowledge base, return it
             res.status(200).json({ response: answer.response });
         } else {
-            // If no answer in knowledge base, generate response using Gemini API
+            // If no answer is found, generate a response using the Gemini API
             try {
-                const result = await model.generateContent(message);
-                const response = await result.response;
-                const generatedText = await response.text();
+                const generatedText = await generateShortResponse(message);
 
-                res.status(200).json({ response: generatedText });
+                if (generatedText) {
+                    // If the response was successfully generated, return it
+                    res.status(200).json({ response: generatedText });
+                } else {
+                    // If the Gemini API response is null, return an error message
+                    res.status(500).json({ error: 'Failed to generate a response. Please try again later.' });
+                }
             } catch (apiError) {
+                // Handle any errors that occur while generating the response
                 console.error('Error generating response from Gemini API:', apiError);
                 res.status(500).json({ error: 'Failed to generate response. Please try again later.' });
             }
         }
     } catch (err) {
+        // Handle any other errors that occur
         console.error('Error handling query:', err);
         res.status(500).json({ error: 'An error occurred while processing your request.' });
     }
