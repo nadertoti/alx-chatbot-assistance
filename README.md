@@ -220,7 +220,7 @@ Please adhere to this project's `code of conduct`.
 
 ## License
 
-- This project is licensed under the MIT License - see the [License](https://choosealicense.com/licenses/mit/) file for details.
+- This project is licensed under the MIT License - see the [License](https://github.com/nadertoti/alx-chatbot-assistance/blob/master/LICENSE) file for details.
 
 
 ## Authors
