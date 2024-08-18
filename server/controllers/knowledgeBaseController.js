@@ -1,37 +1,14 @@
 const KnowledgeBase = require('../models/KnowledgeBase');
-const model = require('../gemini'); // Import the Gemini model
-const { generateShortResponse } = require('../gemini'); // Import the updated generateShortResponse function
+const { generateShortResponse } = require('../gemini'); // Import the generateShortResponse function
 
 // Controller to handle knowledge base queries through user question
-// Firist approach : without handle question uing Gemini API
-/* 
-exports.handleQuery = async (req, res) => {
-    try {
-        const { message } = req.body; // Make sure 'message' exists in req.body
-
-        const answer = await KnowledgeBase.findOne({ question: { $regex: message, $options: 'i' } });
-
-        if (answer) {
-            res.status(200).json({ response: answer.response });
-        } else {
-            res.status(200).json({ response: 'I am still learning! Please ask me something else.' });
-        }
-    } catch (err) {
-        console.error('Error handling query:', err);
-        res.status(500).json({ error: 'An error occurred while processing your request.' });
-    }
-}; 
-*/
-
-// Second approach : with handel question using Gemini API
+// First approach : handel question using Gemini API
 exports.handleQuery = async (req, res) => {
     try {
         const { message } = req.body;
 
-        // Search the knowledge base for an answer
-        const answer = await KnowledgeBase.findOne({
-            question: { $regex: message, $options: 'i' } // Case-insensitive search
-        });
+        // Search the knowledge base for an answer and care about Case-insensitive search
+        const answer = await KnowledgeBase.findOne({ question: { $regex: message, $options: 'i' } });
 
         if (answer) {
             // If a matching answer is found in the knowledge base, return it
@@ -60,6 +37,59 @@ exports.handleQuery = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while processing your request.' });
     }
 };
+
+// Second approach : without handle question uing Gemini API
+/*
+exports.handleQuery = async (req, res) => {
+    try {
+        const { message } = req.body; // Make sure 'message' exists in req.body
+
+        const answer = await KnowledgeBase.findOne({ question: { $regex: message, $options: 'i' } });
+
+        if (answer) {
+            res.status(200).json({ response: answer.response });
+        } else {
+            res.status(200).json({ response: 'I am still learning! Please ask me something else.' });
+        }
+    } catch (err) {
+        console.error('Error handling query:', err);
+        res.status(500).json({ error: 'An error occurred while processing your request.' });
+    }
+};
+*/
+
+
+// Using the Gemini model Without Fine tunig
+/*
+const model = require('../gemini'); // Import the Gemini model
+exports.handleQuery = async (req, res) => {
+    try {
+        const { message } = req.body;
+
+        // Search the knowledge base for an answer
+        const answer = await KnowledgeBase.findOne({ question: { $regex: message, $options: 'i' } });
+
+        if (answer) {
+            res.status(200).json({ response: answer.response });
+        } else {
+            // If no answer in knowledge base, generate response using Gemini API
+            try {
+                const result = await model.generateContent(message);
+                const response = await result.response;
+                const generatedText = await response.text();
+
+                res.status(200).json({ response: generatedText });
+            } catch (apiError) {
+                console.error('Error generating response from Gemini API:', apiError);
+                res.status(500).json({ error: 'Failed to generate response. Please try again later.' });
+            }
+        }
+    } catch (err) {
+        console.error('Error handling query:', err);
+        res.status(500).json({ error: 'An error occurred while processing your request.' });
+    }
+};
+*/
 
 // Controller to handle KnowledgeBase Management using Admin panal
 // Get all knowledge base entries
