@@ -8,8 +8,8 @@ const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
     generationConfig: {
         candidateCount: 1,         // Number of generated responses to return
-        maxOutputTokens: 60,       // Limit the number of tokens in the output
-        temperature: 0.5,          // Control randomness; lower for more deterministic responses
+        maxOutputTokens: 50,       // Limit the number of tokens in the output
+        temperature: 0.3,          // Control randomness; lower for more deterministic responses
 
     },
 });
@@ -24,14 +24,14 @@ async function generateShortResponse(prompt) {
                     role: 'user',    // Role of the message sender
                     parts: [
                         {
-                            text: `You are an expert assistant for students enrolled in the ALX Africa program (https://www.alxafrica.com/). Respond to this query as if you were helping a student from the program: ${prompt}`,
+                            text: `You are an expert assistant for students enrolled in the ALX Africa program (https://www.alxafrica.com/). Respond with concise and accurate information similar to a helpdesk FAQ response, use emojies and not use bold text. Question: ${prompt}`,
                         }
                     ],
                 }
             ],
             generationConfig: {
-                maxOutputTokens: 60,
-                temperature: 0.5,
+                maxOutputTokens: 50,
+                temperature: 0.3,
 
             },
         });
