@@ -7,9 +7,9 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
     generationConfig: {
-        candidateCount: 1,         // Number of generated responses to return
-        maxOutputTokens: 50,       // Limit the number of tokens in the output
-        temperature: 0.3,          // Control randomness; lower for more deterministic responses
+        candidateCount: 1,      // Number of generated responses to return
+        maxOutputTokens: 50,   // Limit the number of tokens in the output
+        temperature: 0.3,     // Control randomness, lower for more deterministic responses
 
     },
 });
