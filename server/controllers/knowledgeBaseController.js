@@ -92,9 +92,10 @@ exports.handleQuery = async (req, res) => {
 */
 
 // Controller to handle KnowledgeBase Management using Admin panal
-// Get all knowledge base entries
+// Prepeare for future enahancements
 // KnowledgeBase Management Controllers
 /*
+// Get all knowledge base entries
 exports.getAllEntries = async (req, res) => {
     try {
         const entries = await KnowledgeBase.find();
@@ -104,7 +105,7 @@ exports.getAllEntries = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching entries.' });
     }
 };
-
+// Get specific knowledge by id
 exports.getEntryById = async (req, res) => {
     try {
         const entry = await KnowledgeBase.findById(req.params.id);
@@ -118,7 +119,7 @@ exports.getEntryById = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching the entry.' });
     }
 };
-
+// Create new question and respose on knowledge base 
 exports.createEntry = async (req, res) => {
     try {
         const { question, response } = req.body;
@@ -130,7 +131,7 @@ exports.createEntry = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while creating the entry.' });
     }
 };
-
+// Keep your Knowledge base up-to-date
 exports.updateEntry = async (req, res) => {
     try {
         const { question, response } = req.body;
@@ -145,7 +146,7 @@ exports.updateEntry = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while updating the entry.' });
     }
 };
-
+// Delete out-of-date knowledge to keep the quality of respose
 exports.deleteEntry = async (req, res) => {
     try {
         const deletedEntry = await KnowledgeBase.findByIdAndDelete(req.params.id);
