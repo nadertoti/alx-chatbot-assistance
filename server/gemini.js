@@ -8,7 +8,6 @@ const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
     generationConfig: {
         candidateCount: 1,         // Number of generated responses to return
-
         maxOutputTokens: 60,       // Limit the number of tokens in the output
         temperature: 0.5,          // Control randomness; lower for more deterministic responses
 
@@ -22,7 +21,7 @@ async function generateShortResponse(prompt) {
         const result = await model.generateContent({
             contents: [
                 {
-                    role: 'user',    // Role of the message sender (e.g., user, assistant)
+                    role: 'user',    // Role of the message sender
                     parts: [
                         {
                             text: `You are an expert assistant for students enrolled in the ALX Africa program (https://www.alxafrica.com/). Respond to this query as if you were helping a student from the program: ${prompt}`,
@@ -31,8 +30,8 @@ async function generateShortResponse(prompt) {
                 }
             ],
             generationConfig: {
-                maxOutputTokens: 60, // Override maxOutputTokens if needed for this call
-                temperature: 0.5,    // Override temperature if needed for this call
+                maxOutputTokens: 60,
+                temperature: 0.5,
 
             },
         });
@@ -47,3 +46,14 @@ async function generateShortResponse(prompt) {
 
 // Export the function for use in other parts of the application
 module.exports = { generateShortResponse };
+
+// USING GEMINI MODEL ON DEFULT VERSION WITHOUT CONFIGRATION
+/*
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+module.exports = model;
+*/
